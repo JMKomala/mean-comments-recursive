@@ -1,0 +1,144 @@
+<!-- Header for Form and Header -->
+<div class="col-md-12 col-sm-12">
+    <div class="row">
+        <div class="blog-span-bottom">
+            <div class="title-block clearfix">
+                <h3 class="h3-body-title">leave A Comment</h3>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+<!-- End of Header -->
+
+<!-- Begin Form -->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <form name="$ctrl.postForm" ng-submit="$ctrl.submitPost()" class="form-wrapper" novalidate>
+            <div class="form-group" ng-if="!$ctrl.loggedIn">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" class="form-control" data-errmsg="Name is required." ng-model="$ctrl.postData.name" minlength="2" placeholder="Your Name" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="name">Title *</label>
+                        <input type="text" id="title" class="form-control" data-errmsg="Title is required." ng-model="$ctrl.postData.title" minlength="2" placeholder="Title" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="message">Comment: </label>
+                        <textarea id="message" name="message" class="form-control" name="comment" ng-model="$ctrl.postData.text" placeholder="Your Comment" rows="3" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" style='padding-bottom: 10px;'>
+                    <div name='recaptcha' vc-recaptcha ng-model='$ctrl.recaptcha' required></div>
+                    <span ng-show="($ctrl.postForm.$submitted || $ctrl.postForm.recaptcha.$dirty) && $ctrl.postForm.recaptcha.$error.required" class="help-block" style='font-weight: bold; color: red;' class='help-block'> reCAPTCHA Is Required</span>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-lg btn-primary no-shadow">Submit</button>
+            </div>
+        </form>
+    </div>
+</div> <br>
+<!-- End Form -->
+
+<!-- Start Comment Section -->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="comments">
+            <div class="blog-span-bottom">
+
+                <div class="title-block clearfix">
+                    <h3 class="h3-body-title">Comments</h3>
+                    <div class="title-seperator"></div>
+                </div>
+                <!-- Comment List -->
+                <ol class="comments-list">
+
+                    <li ng-repeat="comment in $ctrl.comments track by $index " ng-include="'comment.html'">
+                    </li>
+                </ol>
+                <!-- //Comment List// -->
+            </div>
+        </div>
+        <!-- // Comments // -->
+    </div>
+</div>
+
+<!-- Begin Template for nested comments or nested ng-repeat -->
+<script type="text/ng-template" id="comment.html">
+
+
+
+    <div class=" col-md-12 animated fadeInUp animatedVisi">
+        <div class="comment-component-wrap">
+            <div class="photo">
+                <img src="{{comment.imageUrl}}" class="avatar" alt="avatar" />
+            </div>
+            <div class="comment-block">
+                <h5><strong>{{comment.name}}</strong></h5>
+                <p><i>{{comment.title | uppercase}}</i></p>
+                <p class="comment-text">{{comment.text}}</p>
+                <div class="bottom-comment">
+                    <hr>
+                    <div class="comment-date"><i class='fa fa-list'></i> Posted on {{comment.createdAt | date: 'MMM d, y @ h:mm a'}}</div>
+                    <ul class="comment-actions">
+                        <button class="btn-reply pull-right" ng-click="$ctrl.selectedReply(comment._id)">
+                            <i class='fa fa-share'></i> Reply</button>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div ng-if="$ctrl.selectedComment == comment._id" class="animate-if">
+        <!-- Begin Reply Form -->
+        <form name="$ctrl.replyForm" ng-submit="$ctrl.submitReply($parent, comment._id)" class="form-wrapper" novalidate>
+            <div class="form-group" ng-if="!$ctrl.loggedIn">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" class="form-control" data-errmsg="Name is required." ng-model="$ctrl.replyData.name" minlength="2" placeholder="Your Name" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" class="form-control" name="comment" ng-model="$ctrl.replyData.text" placeholder="Your Message" rows="3" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 padding-bottom-20">
+                    <div name='recaptcha' vc-recaptcha ng-model='$ctrl.recaptcha' required></div>
+                    <span ng-show="($ctrl.replyForm$submitted || $ctrl.replyForm.recaptcha.$dirty) && $ctrl.replyForm.recaptcha.$error.required" class="help-block" style='font-weight: bold; color: red;' class='help-block'> reCAPTCHA is required</span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary no-shadow" ng-disabled="$ctrl.replyForm.$invalid">Submit</button>
+        </form>
+    </div>
+    <!-- End Reply Form -->
+    <ul>
+        <!-- If a comment has sub-comment, the this <li> tag will keep calling comment.html until there is no more sub-comment -->
+        <li ng-repeat="comment in comment._comments" ng-include="'comment.html'">
+        </li>
+    </ul>
+
+</script>
+<!-- End Template for nested comments or nested ng-repeat -->
