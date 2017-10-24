@@ -1,6 +1,4 @@
 /* global angular */
-(function() {
-    'use strict';
-
-    angular.module('green-public.components', ['ngSanitize'])
+(function () {
+    angular.module('appName.comments', ['ngSanitize'])
 })();

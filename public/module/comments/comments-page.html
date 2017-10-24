@@ -1,0 +1,77 @@
+<div class="body-wrapper">
+    <div class="container">
+        <div class="row">
+    
+        
+                <!-- //Start Form // -->
+                <div class="col-md-12 col-sm-12">
+                    <div class="row">
+                        <div>
+                            <form name="commentCtrl.postForm" ng-submit="commentCtrl.submitPost()" class="form-wrapper" novalidate>
+                                <div class="form-group" >
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label for="name">Name *</label>
+                                            <input type="text" id="name" class="form-control" data-errmsg="Name is required." ng-model="commentCtrl.postData.name"
+                                                minlength="2" placeholder="Your Name" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label for="name">Title *</label>
+                                            <input type="text" id="title" class="form-control" data-errmsg="Title is required." ng-model="commentCtrl.postData.title"
+                                                minlength="2" placeholder="Title" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xs-7">
+                                            <label for="message">Message</label>
+                                            <textarea id="message" name="message" class="form-control" name="comment" ng-model="commentCtrl.postData.text" placeholder="Your Message"
+                                                rows="3" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                            <!--End Form-->
+                        </div>
+                        <!-- Comments -->
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="comments">
+                                    <div class="blog-span-bottom">
+                                        <div class="title-block clearfix">
+                                            <h3 class="h3-body-title">Comments</h3>
+                                            <div class="title-seperator"></div>
+                                        </div>
+                                        <!-- Comment List -->
+                                        <ol class="comments-list" style="list-style: none">
+                                          
+                                            <li ng-repeat="comment in commentCtrl.pageComments track by $index" ng-include src="'public/module/comments/comments-display.html'" >
+                                            </li>
+                                       
+                                        </ol>
+                                        <!-- //Comment List// -->
+                                    </div>
+                                </div>
+                                <!-- // Comments // -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

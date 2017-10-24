@@ -3,12 +3,15 @@ const Schema = mongoose.Schema;
 const CommentSchema = require('../models/comment');
 
 
-const ForumPostSchema = new Schema({
+const PostSchema = new Schema({
+    pageUrl: {
+        type: String
+    },
     title: {
         type: String,
-        required: true,
+        // required: true,
     },
-    pageUrl: {
+    text: {
         type: String
     },
     user: {
@@ -19,13 +22,25 @@ const ForumPostSchema = new Schema({
     },
     ip: {
         type: String,
-        required: true
+        // required: true
     },
     imageUrl: {
         type: String
     },
-    text: {
-        type: String
+    post: [{
+        type: mongoose.Schema.Types.ObjectId
+    }],
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
+    isApproved: {
+        type: Boolean,
+        default: true
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,
@@ -34,20 +49,8 @@ const ForumPostSchema = new Schema({
     updatedAt: {
         type: Date,
         default: new Date()
-    },
-    isApproved: { 
-        type: Boolean, 
-        default: true 
-    },
-    isDeleted: { 
-        type: Boolean, 
-        default: false 
-    },
-    _comments: [{ 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Comment' 
-    }]
+    }
 })
 
-module.exports = mongoose.model('ForumPost', ForumPostSchema)
+module.exports = mongoose.model('Post', PostSchema)
 

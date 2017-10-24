@@ -1,0 +1,26 @@
+        <div class="comment-content">
+            <div class="comment-author-avatar">
+                <img src="{{comment.imageUrl}}" alt="John Doe" class="img-responsive img-thumbnail" />
+            </div>
+            <div class="comment-details">
+                <div><strong>{{comment.title}}</strong></div>
+                <div class="comment-author-name">
+                    <span>{{comment.name}}</span>
+                    <span class="comment-date">{{comment.createdAt |date:'MMMM dd, yyyy'}}</span>
+                    <a class="comment-reply pull-right" ng-click="commentCtrl.selectedReply(comment._id)" href="">(reply)</a>
+                </div>
+                <div class="comment-body">
+                    {{comment.text}}
+    
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div ng-if="commentCtrl.selectedComment == comment._id" class="animate-if">
+            <div ng-include src="'public/module/comments/reply-form.html'" />
+        </div>
+        <ul>
+            <!-- <li ng-repeat="(parentindex, comment) in comment._comments| orderBy: 'createdAt': true" ng-include="'comment.html'"> -->
+            <li ng-repeat="(parentindex, comment) in comment._comments" ng-include src="'public/module/comments/comments-display.html'">
+            </li>
+        </ul>

@@ -1,4 +1,3 @@
-const responses = require('../models/responses');
 const path = require('path');
 const apiPrefix = '/api/commentPosts';
 const commentModel = require('../models/comment');

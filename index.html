@@ -13,28 +13,20 @@
 </head>
 
 <body>
-
-    <div ng-controller="myController as myCtrl">
-
-        <h1>{{myCtrl.text}}</h1>
-
-        <input type="text" ng-model="myCtrl.todo">
-        <button type=button ng-click="myCtrl.addTodo()">Add Todo</button>
-
-        <hr/>
-        <div ng-repeat="item in myCtrl.todoArray track by $index">
-                <button type="button" ng-click="myCtrl.removeTodo($index)">Remove Todo</button>
-                <p style="display:inline-block">{{item}}</p>
+    <div class="container">
+        <h1>COMMENTS</h1>
+        <div ng-controller="commentsController as commentCtrl">
+            <div ng-include src="'public/module/comments/comments-page.html'"></div>
         </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 
     <script src="app.js"></script>
-
+    <script src="./public/module/comments/comments.controller..js"></script>
+    <script src="./public/services/comments.service.js"></script>
 </body>
 
 </html>
