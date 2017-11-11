@@ -3,7 +3,7 @@
         <div class="form-group" ng-if="!commentCtrl.loggedIn">
             <div class="row col-xs-6">
                 <label for="name">Name *</label>
-                <input type="text" id="name" class="form-control" data-errmsg="Name is required." ng-model="commentCtrl.replyData.name" minlength="2"
+                <input type="text" id="name" class="form-control" data-errmsg="Name is required." ng-model="commentCtrl.postData.name" minlength="2"
                     placeholder="Your Name" required/>
             </div>
         </div>
@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-xs-7">
                     <label for="message">Message</label>
-                    <textarea id="message" name="message" class="form-control" name="comment" ng-model="commentCtrl.replyData.text" placeholder="Your Message"
+                    <textarea id="message" name="message" class="form-control" name="comment" ng-model="commentCtrl.postData.text" placeholder="Your Message"
                         rows="3" required></textarea>
                 </div>
             </div>

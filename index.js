@@ -7,8 +7,9 @@ const bodyParser = require('body-parser')
 
 
 mongoose.Promise = global.Promise;
-// mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/gallery')
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/comments')
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/comments',{
+useMongoClient: true}
+)
 
 app.use(bodyParser.json());
 // routes ==========================

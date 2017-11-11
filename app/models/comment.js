@@ -1,7 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema({
+const commentSchema = new Schema({
+    pageUrl: {
+        type: String
+    },
+    title: {
+        type: String,
+        // required: true,
+    },
+    text: {
+        type: String
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
     },
@@ -10,13 +20,24 @@ const CommentSchema = new Schema({
     },
     ip: {
         type: String,
-        required: false
+        // required: true
     },
     imageUrl: {
         type: String
     },
-    text: {
-        type: String
+    parentId: [{
+        type: mongoose.Schema.Types.ObjectId
+    }],
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+    }],
+    isApproved: {
+        type: Boolean,
+        default: true
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,
@@ -25,26 +46,8 @@ const CommentSchema = new Schema({
     updatedAt: {
         type: Date,
         default: new Date()
-    },
-    isApproved: { 
-        type: Boolean, 
-        default: true 
-    },
-    isDeleted: {
-        type: Boolean,
-        default: false
-    },
-    _comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
+    }
 })
 
-const populateComments = function (next) {
-    this.populate({ path: '_comments' });
-    next();
-}
+module.exports = mongoose.model('Comment', commentSchema)
 
-CommentSchema.pre('find', populateComments);
-
-module.exports = mongoose.model('Comment', CommentSchema)

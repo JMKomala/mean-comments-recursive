@@ -20,31 +20,37 @@
         // var defaultImage = '/public-unrestricted/images/placeholders/author-placeholder.jpg'
         var url = $location.url();
         vm.pageComments = [];
-        vm.submitReply = _submitReply;
         vm.selectedReply = selectedReply;
         vm.selectedComment = null;
         vm.templatePath = "replyForm.html";
 
-
-
-
         vm.$onInit = () => {
             //gets all posts and comments
-            commentService.getComments()
+            let pageUrl = url;
+            commentService.getCommentsByPage(pageUrl)
                 .then(onGetCommentSuccess)
                 .catch(onCommentError)
         }
 
-
         //submit a new post
         vm.submitPost = () => {
+            vm.postData.pageUrl = url;
             if (vm.postForm.$invalid) {
                 console.log("FormInvalid");
                 return;
             }
-            // vm.postData.pageUrl = url;
-            commentService.post(vm.postData)
+            commentService.postComment(vm.postData)
                 .then(onCommentSubmitSuccess)
+                .catch(onCommentError)
+        }
+
+        //submits the reply form & checks if its a reply on a post or on a reply
+        vm.submitReply = (parentComment, id) => {
+            if (parentComment.comment.title) {
+                vm.postData.title = parentComment.comment.title
+            }
+            commentService.postReply(vm.postData, id)
+                .then(onReplySuccess)
                 .catch(onCommentError)
         }
 
@@ -62,19 +68,8 @@
             vm.showReplyForm = !vm.showReplyForm
         }
 
-        //submits the reply form & checks if its a reply on a post or on a reply
-        function _submitReply(parentComment, id) {
-            checkUser();
-            if (parentComment.comment.title) {
-                commentService.postReplyParent(vm.replyData, id)
-                    .then(onReplySuccess)
-                    .catch(onCommentError)
-            } else {
-                commentService.postReplyChild(vm.replyData, id)
-                    .then(onReplySuccess)
-                    .catch(onCommentError)
-            }
-        };
+
+
 
         function onGetByIdSuccess(res) {
             vm.projectData = res.data.item
@@ -87,7 +82,6 @@
 
         function onGetCommentSuccess(response) {
             console.log(response);
-            debugger;
             vm.pageComments = response;
         }
 
