@@ -6,11 +6,11 @@ function commentsService(options) {
         throw new Error('Options.modelService is required')
     }
 
-   Comments = options.modelService.commentModel
+    Comments = options.modelService.commentModel
 
     return {
         getAll: getAll,
-        getAllByPage: getAllByPage,
+        // getCommentsByUrl: getCommentsByUrl,
         getOne: getOne,
         insert: insert,
         update: update,
@@ -19,32 +19,32 @@ function commentsService(options) {
         postReplyChild: postReplyChild
     }
     function getAll() {
-        return Comments.find()
+        return Comments.find({"title":"ParentComment"}).populate('comments').exec()
     }
 
-    function getAllByPage(queryCondition) {
-        // return Comments.find(queryCondition).populate('comments').exec()
 
-        return Comments.aggregate( [
-            { $match: { pageUrl: queryCondition } },
-            {
-                $unwind:
-                  {
-                    path: "$comments",
-                    includeArrayIndex: <string>,
-                  }
-              }
-            {
-               $graphLookup: {
-                  from: "comments",
-                  startWith: "$parentId",
-                  connectFromField: "$parentId",
-                  connectToField: "name",
-                  as: "reportingHierarchy"
-               }
-            }
-         ] ).exec()
-    }
+    // function getAll() {
+    //     return Comments.find(queryCondition).populate('comments').exec()
+    //     return Comments.aggregate([
+    //         { $match: { title: {$exists: true} } }
+    //         { $group: { _id: "$parentId" } },
+    //         {
+    //             $unwind:
+    //             {
+    //                 path: "$comments",
+    //             }
+    //         },
+    //         {
+    //             $graphLookup: {
+    //                 from: "comments",
+    //                 startWith: "$parentId",
+    //                 connectFromField: "parentId",
+    //                 connectToField: "_id",
+    //                 as: "parent"
+    //             }
+    //         }
+    //     ])
+    // }
 
     function insert(document) {
         let post = new Comments(document)

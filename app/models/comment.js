@@ -25,9 +25,9 @@ const commentSchema = new Schema({
     imageUrl: {
         type: String
     },
-    parentId: [{
+    parentId: {
         type: mongoose.Schema.Types.ObjectId
-    }],
+    },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
     }],
@@ -48,6 +48,13 @@ const commentSchema = new Schema({
         default: new Date()
     }
 })
+
+const populateComments = function(next) {
+    this.populate({ path: 'comments' });
+    next();
+}
+
+commentSchema.pre('find', populateComments);
 
 module.exports = mongoose.model('Comment', commentSchema)
 

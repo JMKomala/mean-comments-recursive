@@ -7,16 +7,15 @@
     .module("appName")
     .factory("commentService", CommentServiceFactory);
 
-  CommentServiceFactory.$inject = ["$http"];
+  CommentServiceFactory.$inject = ["$http","$q"];
 
-  function CommentServiceFactory($http) {
+  function CommentServiceFactory($http,$q) {
     return {
       postComment: _postComment,
       getComments: _getComments,
       deleteComment: _deleteComment,
       postReply:_postReply,
-      postReplyChild:_postReplyChild,
-      getCommentsByPage:_getCommentsByPage
+      getCommentsByUrl:_getCommentsByUrl
     }
 
     //submit new postComment
@@ -29,7 +28,6 @@
 
     //reply on a postComment
     function _postReply(comment, parentId) {
-      debugger;
       return $http.post(`api/comments/post/${parentId}`, comment)
       .then(_onPostCommentSuccess)
       .catch(_onPostCommentError)
@@ -40,24 +38,12 @@
         .then(_onGetCommentsSuccess)
         .catch(_onGetCommentsError)
     }
-
-
-
-    //reply on a replyComment 
-    function _postReplyChild(comment, parentId) {
-      debugger;
-      return $http.post(`api/comments/comment/${parentId}`, comment)
-      .then(_onPostCommentSuccess)
-      .catch(_onPostCommentError)
-    }
-
- 
-
-    function _getCommentsByPage(pageUrl) {
-      return $http.post("api/comments/profilePage", pageUrl)
+    function _getCommentsByUrl(pageUrl) {
+      return $http.post('api/comments/getByUrl', pageUrl)
         .then(_onGetCommentsSuccess)
         .catch(_onGetCommentsError)
     }
+
 
     function _deleteComment(pageId) {
       return $http.delete("api/comments/:id")

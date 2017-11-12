@@ -11,7 +11,7 @@ function commentsController() {
     return {
         insert: insert,
         getAll: getAll,
-        getCommentsByPage: getCommentsByPage,
+        // getCommentsByUrl: getCommentsByUrl,
         getOneById: getOneById,
         postReply: postReply,
         updateById: updateById,
@@ -65,7 +65,6 @@ function commentsController() {
         commentsService
             .getAll()
             .then(posts => {
-                // const responseModel = new responses.ItemsResponse();
                 res.json(posts);
             })
             .catch(err => {
@@ -73,17 +72,17 @@ function commentsController() {
             });
     }
 
-    function getCommentsByPage(req, res) {
-        let queryCondition = req.body.pageUrl;
-        commentsService
-            .getAllByPage({ 'pageUrl': queryCondition })
-            .then(forumPost => {
-                res.json(forumPost);
-            })
-            .catch(err => {
-                return res.status(500).send(err);
-            });
-    }
+    // function getCommentsByUrl(req, res) {
+    //     let queryCondition = req.body.pageUrl;
+    //     commentsService
+    //         .getCommentsByUrl({'pageUrl': queryCondition })
+    //         .then(forumPost => {
+    //             res.json(forumPost);
+    //         })
+    //         .catch(err => {
+    //             return res.status(500).send(err);
+    //         });
+    // }
 
     function getOneById(req, res) {
         let queryCondition = {

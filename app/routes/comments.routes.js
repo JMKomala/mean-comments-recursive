@@ -6,8 +6,7 @@ module.exports = router
 // api routes ===========================================================
 router.get('/', commentsController.getAll)
 router.get('/:id', commentsController.getOneById)
-
-router.post('/profilePage', commentsController.getCommentsByPage)
+// router.post('/getByUrl', commentsController.getCommentsByUrl)
 router.post('/', commentsController.insert)
 router.post('/post/:id', commentsController.postReply)
 

@@ -27,9 +27,11 @@
         vm.$onInit = () => {
             //gets all posts and comments
             let pageUrl = url;
-            commentService.getCommentsByPage(pageUrl)
+            commentService.getComments()
+            // commentService.getCommentsByUrl(pageUrl)
                 .then(onGetCommentSuccess)
                 .catch(onCommentError)
+                
         }
 
         //submit a new post
@@ -68,9 +70,6 @@
             vm.showReplyForm = !vm.showReplyForm
         }
 
-
-
-
         function onGetByIdSuccess(res) {
             vm.projectData = res.data.item
             console.log(vm.projectData)
@@ -91,7 +90,7 @@
             vm.postData = {};
             vm.postForm.$setPristine();
             alert('Post Submitted')
-            commentService.getCommentsByPage({ pageUrl: url })
+            commentService.getCommentsByUrl({ pageUrl: url })
                 .then(onGetCommentSuccess)
                 .catch(onCommentError)
         }
@@ -102,7 +101,7 @@
             vm.replyForm.$setPristine();
             vm.selectedComment = null;
             alert('Reply Submitted')
-            commentService.getCommentsByPage({ pageUrl: url })
+            commentService.getCommentsByUrl({ pageUrl: url })
                 .then(onGetCommentSuccess)
                 .catch(onCommentError)
         }

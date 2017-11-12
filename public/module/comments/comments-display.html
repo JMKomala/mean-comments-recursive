@@ -21,6 +21,6 @@
         </div>
         <ul>
             <!-- <li ng-repeat="(parentindex, comment) in comment._comments| orderBy: 'createdAt': true" ng-include="'comment.html'"> -->
-            <li ng-repeat="(parentindex, comment) in comment._comments" ng-include src="'public/module/comments/comments-display.html'">
+            <li ng-repeat="(parentindex, comment) in comment.comments" ng-include src="'public/module/comments/comments-display.html'">
             </li>
         </ul>
